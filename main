@@ -1,0 +1,26 @@
+import hashlib
+
+def crack_md5_pin(target_hash):
+    # Перебираємо всі можливі 5-значні PIN-коди
+    for pin in range(100000):
+        # Перетворюємо число на 5-значний рядок з провідними нулями
+        pin_str = f"{pin:05d}"
+        
+        # Обчислюємо MD5 хеш для поточного PIN-коду
+        current_hash = hashlib.md5(pin_str.encode()).hexdigest()
+        
+        # Перевіряємо, чи збігається хеш
+        if current_hash == target_hash:
+            return pin_str
+    
+    # Якщо PIN-код не знайдено
+    return None
+
+# Приклад використання
+target_hash = "482c811da5d5b4bc6d497ffa98491e38"
+result = crack_md5_pin(target_hash)
+
+if result:
+    print(f"PIN-код: {result}")
+else:
+    print("PIN-код не знайдено")
